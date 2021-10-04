@@ -9,6 +9,7 @@ export default {
 };
 
 const callback = action("accordion mode change event fired");
+const onClickCallback = action("some item was clicked");
 /*const onClickCallback = action("some item was clicked");*/
 
 const Template: Story<AccordionPropsType> = (args) => <Accordion {...args} />;
@@ -23,14 +24,24 @@ MenuCollapsedModeFalse.args = {
   ...callbackProps,
   titleText: "--Menu--",
   collapsed: false,
-  count: 3,
+  items: [
+    { title: "cvbdffgfd", value: 1 },
+    { title: "fgdfg", value: 2 },
+    { title: "gfdgfd", value: 3 },
+  ],
+  onClick: onClickCallback,
 };
 export const MenuCollapsedModeTrue = Template.bind({});
 MenuCollapsedModeTrue.args = {
   ...callbackProps,
   titleText: "--Menu--",
   collapsed: true,
-  count: 10,
+  items: [
+    { title: "cvbdffgfd", value: 1 },
+    { title: "fgdfg", value: 2 },
+    { title: "gfdgfd", value: 3 },
+  ],
+  onClick: onClickCallback,
 };
 
 export const ModeChanging: Story<AccordionPropsType> = (args) => {
@@ -38,12 +49,23 @@ export const ModeChanging: Story<AccordionPropsType> = (args) => {
   const callback = () => {
     setValue(!value);
   };
-  return <Accordion {...args} collapsed={value} callback={callback} />;
+  return (
+    <Accordion
+      {...args}
+      collapsed={value}
+      callback={callback}
+      items={[
+        { title: "cvbdffgfd", value: 1 },
+        { title: "fgdfg", value: 2 },
+        { title: "gfdgfd", value: 3 },
+      ]}
+      onClick={onClickCallback}
+    />
+  );
 };
 
 ModeChanging.args = {
   titleText: "--Menu--",
-  count: 6,
   collapsed: true,
   callback: callback,
 };

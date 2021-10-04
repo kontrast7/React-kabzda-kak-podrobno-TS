@@ -2,27 +2,11 @@ import React from "react";
 
 export type AccordionPropsType = {
   titleText: string;
-  count: number;
   collapsed: boolean;
   callback: (value: boolean) => void;
+  items: Array<ItemType>;
+  onClick: (value: any) => any;
 };
-type AccordionPropsTypeCount = {
-  count: number;
-};
-type AccordionPropsTypeTitle = {
-  title: string;
-  value: boolean;
-  callback: (value: boolean) => void;
-};
-
-let countI = (pr: number) => {
-  let arr = [];
-  for (let i = 1; i <= pr; i++) {
-    arr.push(<li key={i}>{i}</li>);
-  }
-  return <ul>{arr}</ul>;
-};
-
 export function Accordion(props: AccordionPropsType) {
   return (
     <div>
@@ -31,10 +15,18 @@ export function Accordion(props: AccordionPropsType) {
         callback={props.callback}
         value={props.collapsed}
       />
-      {props.collapsed && <AccordionBody count={props.count} />}
+      {props.collapsed && (
+        <AccordionBody items={props.items} onClick={props.onClick} />
+      )}
     </div>
   );
 }
+
+type AccordionPropsTypeTitle = {
+  title: string;
+  value: boolean;
+  callback: (value: boolean) => void;
+};
 
 function AccordionTitle(props: AccordionPropsTypeTitle) {
   return (
@@ -48,6 +40,28 @@ function AccordionTitle(props: AccordionPropsTypeTitle) {
   );
 }
 
-function AccordionBody(props: AccordionPropsTypeCount) {
-  return countI(props.count);
+export type ItemType = {
+  title: string;
+  value: any;
+};
+export type AccordionBodyType = {
+  items: Array<ItemType>;
+  onClick: (value: any) => any;
+};
+
+function AccordionBody(props: AccordionBodyType) {
+  return (
+    <ul>
+      {props.items.map((m, index) => (
+        <li
+          onClick={() => {
+            props.onClick(m.value);
+          }}
+          key={index}
+        >
+          {m.title}
+        </li>
+      ))}
+    </ul>
+  );
 }
