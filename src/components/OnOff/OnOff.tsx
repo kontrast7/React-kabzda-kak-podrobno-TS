@@ -1,58 +1,43 @@
 import React from "react";
 
-type PropsType = {
-  value: boolean;
-  callback: (value: boolean) => void;
-};
+type OnOffProps = {
+    status: boolean
+    callback: (value: boolean) => void
+}
 
-export function OnOff(props: PropsType) {
-  const onStyle = {
-    display: "inline-block",
-    width: "30px",
-    height: "20px",
-    margin: "5px",
-    border: "1px solid black",
-    backgroundColor: props.value ? "green" : "white",
-  };
-  const offStyle = {
-    display: "inline-block",
-    width: "30px",
-    height: "20px",
-    margin: "5px",
-    border: "1px solid black",
-    backgroundColor: props.value ? "white" : "red",
-  };
-  const circleStyle = {
-    display: "inline-block",
-    width: "20px",
-    height: "20px",
-    borderRadius: "10px",
-    border: "1px solid black",
+export const OnOff = (props: OnOffProps) => {
+    const onStyle = {
+        display: "inline-block",
+        width: "30px",
+        height: "20px",
+        padding: "5px",
+        border: "1px solid black",
+        backgroundColor: props.status ? "green" : "white"
+    }
+    const offStyle = {
+        display: "inline-block",
+        width: "30px",
+        height: "20px",
+        marginLeft: "5px",
+        padding: "5px",
+        border: "1px solid black",
+        backgroundColor: !props.status ? "red" : "white"
+    }
+    const indicatorStyle = {
+        display: "inline-block",
+        width: "10px",
+        height: "10px",
+        marginLeft: "5px",
+        border: "1px solid black",
+        borderRadius: "5px",
+        backgroundColor: props.status ? "green" : "red"
+    }
 
-    backgroundColor: props.value ? "green" : "red",
-  };
-  const wrapperStyle = {
-    display: "flex",
-    alignItems: "center",
-  };
-  const onClickHandler = (boo: boolean) => {
-    props.callback(boo);
-  };
-
-  return (
-    <div style={wrapperStyle}>
-      <span style={onStyle} onClick={() => onClickHandler(true)}>
-        On
-      </span>
-      <span style={offStyle} onClick={() => onClickHandler(false)}>
-        Off
-      </span>
-      <span
-        style={circleStyle}
-        onClick={() => {
-          props.callback(!props.value);
-        }}
-      />
-    </div>
-  );
+    return (
+        <div>
+            <div style={onStyle} onClick={() => props.callback(true)}>On</div>
+            <div style={offStyle} onClick={() => props.callback(false)}>Off</div>
+            <div style={indicatorStyle}></div>
+        </div>
+    );
 }

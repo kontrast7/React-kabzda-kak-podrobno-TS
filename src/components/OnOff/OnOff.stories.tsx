@@ -1,20 +1,33 @@
-import React, { useState } from "react";
-import { action } from "@storybook/addon-actions";
-import { OnOff } from "./OnOff";
+import React, {useState} from "react";
+import {OnOff} from "./OnOff";
+import {ComponentStory} from "@storybook/react";
+import {action} from "@storybook/addon-actions";
 
 export default {
-  title: "old/OnOff",
-  component: OnOff,
+    title: "Components/OnOff",
+    component: OnOff
 };
 
-export const onMod = () => (
-  <OnOff value={true} callback={action("on or off clicked")} />
-);
-export const offMod = () => (
-  <OnOff value={false} callback={action("on or off clicked")} />
-);
+const actionCallback = action("Mode changed");
 
-export const ModeChanging = () => {
-  const [value, setValue] = useState<boolean>(true);
-  return <OnOff value={value} callback={setValue} />;
+const Template: ComponentStory<typeof OnOff> = (args) => <OnOff {...args}/>;
+
+export const OnMode = Template.bind({});
+OnMode.args = {
+    status: true,
+    callback: actionCallback
 };
+
+export const OffMode = Template.bind({});
+OffMode.args = {
+    status: false,
+    callback: actionCallback
+};
+
+export const ChangingMode: ComponentStory<typeof OnOff> = (args) => {
+    const [isOn, setIsOn] = useState<boolean>(false);
+    return <OnOff status={isOn} callback={setIsOn}/>;
+}
+ChangingMode.args = {
+
+}
